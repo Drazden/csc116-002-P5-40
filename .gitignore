@@ -1,0 +1,11 @@
+#Ignores class files
+*.class
+
+#Ignores temporary files
+*~
+
+#Ignores contents of any .settings directories
+.settings/
+
+
+
