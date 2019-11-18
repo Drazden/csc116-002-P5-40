@@ -1,0 +1,4 @@
+Title	Year	Length(min)	genres
+Edge of Tomorrow	2014	113	Action,Sci-Fi
+Spider-Man: Into the Spider-Verse	2018	117	Animation,Action,Adventure
+Your Name.	2016	106	Animation,Drama,Fantasy

@@ -12,7 +12,7 @@ For example,
 
 ## Contract (to be completed after you have completed the project)
 
-Select all of the following that apply for Project 4: (To select, change [ ] to [x])
+Select all of the following that apply for Project 5: (To select, change [ ] to [x])
 
 [ ] I received help from an instructor of the course.
 [ ] I received help from a teaching assistant of the course.

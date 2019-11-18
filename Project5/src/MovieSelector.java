@@ -1,14 +1,14 @@
 import java.util.*;
 import java.io.*;
 /**
-* A program that searches for movies through various methods
+* A program that searches for movies in a text file using movie class
 * @author Jacob Robinson
 */
 public class MovieSelector {
     /** Minimum year for movies **/
-    public static final int YEARMIN = 1890;
+    public static final int YEARMIN = 1889;
     /** Maximum year for movies **/
-    public static final int YEARMAX = 2020;
+    public static final int YEARMAX = 2021;
     /**
     * Main method and UI
     * @param args command line arguments
@@ -30,7 +30,7 @@ public class MovieSelector {
         Scanner input = new Scanner(System.in);
         boolean running = true;
         while (running) {
-            System.out.println("\nMovie Selector - Please enter an option below\n");
+            System.out.println("\nMovie Selector - Please enter an option below.\n");
             System.out.println("T - Search by title");
             System.out.println("Y - Search by year");
             System.out.println("G - Search by genre");
@@ -49,11 +49,11 @@ public class MovieSelector {
                     if (year > YEARMIN && year < YEARMAX) {
                         System.out.println("\n" + searchByYear(year, movies));
                     } else {
-                        System.out.println("Invalid Year");
+                        System.out.println("Invalid year");
                     }
                 } else {
                     input.next();
-                    System.out.println("Invalid Year");
+                    System.out.println("Invalid year");
                 } 
             }
             else if (option.toUpperCase().equals("G")) {
@@ -88,12 +88,11 @@ public class MovieSelector {
     }
     
     /**
-    * Gets list of movies
+    * Gets list of movies from input file
     * @param filename file where movies are stored
     * @return movies in an array
     */ 
     public static Movie[] getMovieList(String filename){
-        //Creates scanner and counts movies
         Scanner inputScanner = null;
         File inputFile = new File(filename);
         try {
@@ -101,15 +100,13 @@ public class MovieSelector {
         }
         catch (FileNotFoundException e) {
             throw new IllegalArgumentException("Unable to access input file: " + filename);
-        }
+        } 
         inputScanner.nextLine();
         int counter = 0;
         while (inputScanner.hasNextLine()) {
             inputScanner.nextLine();
             counter++;
         }
-        
-        //Adds movies to array
         try {
             inputScanner = new Scanner(inputFile);
         }
@@ -161,7 +158,7 @@ public class MovieSelector {
     public static String searchByYear(int year, Movie[] movies) {
         String matches = "";
         if (year < 0) {
-            throw new IllegalArgumentException("Invalid Year");
+            throw new IllegalArgumentException("Invalid year");
         }
         for (int i = 0; i < movies.length; i++) {
             if (movies[i].getYear() == year) {
@@ -175,7 +172,7 @@ public class MovieSelector {
     * Searches by genre
     * @param genre of movie
     * @param movies array of movies
-    * @return string
+    * @return string with movies with matching genre
     */
     public static String searchByGenre(String genre, Movie[] movies) {
         String matches = "";
@@ -188,7 +185,7 @@ public class MovieSelector {
     }
     
     /**
-    * Genres
+    * string array of possible genres
     */
     public static final String[] GENRES = {"Action", "Adventure", "Animation", "Biography", 
                                            "Comedy", "Crime", "Documentary", "Drama", "Family", 
