@@ -1,3 +1,5 @@
+import java.util.*;
+import java.io.*;
 /**
 * A program that searches for movies through various methods
 * @author Jacob Robinson
@@ -9,16 +11,70 @@ public class MovieSelector {
     * @param args command line arguments
     */
     public static void main(String[] args) {
-        System.out.println("");
+        Movie[] movies = null;
+        //Checks if correct number of arguments is used, passes to getmovielist
+        if (args.length != 1) {
+            System.out.println("Usage: java -cp bin MovieSelector filename");
+            System.exit(1);
+        }
+        try {
+            movies = getMovieList(args[0]);  
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
+        
+        
+        
     }
     
     /**
     * Gets list of movies
     * @param filename file where movies are stored
-    * @return file
+    * @return movies in an array
     */ 
     public static Movie[] getMovieList(String filename){
-        return null;
+        //Creates scanner and counts movies
+        Scanner inputScanner = null;
+        File inputFile = new File(filename);
+        try {
+            inputScanner = new Scanner(inputFile);
+        }
+        catch (FileNotFoundException e) {
+            throw new IllegalArgumentException("Unable to access input file: " + filename);
+        }
+        inputScanner.nextLine();
+        int counter = 0;
+        while (inputScanner.hasNextLine()) {
+            inputScanner.nextLine();
+            counter++;
+        }
+        
+        //Adds movies to array
+        try {
+            inputScanner = new Scanner(inputFile);
+        }
+        catch (FileNotFoundException e) {
+            throw new IllegalArgumentException("Unable to access input file: " + filename);
+        }
+        inputScanner.nextLine();
+        Movie[] movies = new Movie[counter];
+        for (int i = 0; i < movies.length; i++) {
+            movies[i] = lineSetter(inputScanner.nextLine());
+        }
+        return movies;
+    }
+    
+    /**
+    * Creates a movie object from a line of the input file
+    * @param line of input file from for loop
+    * @return Movie created from line
+    */
+    public static Movie lineSetter(String line) {
+        Scanner lineScanner = new Scanner(line);
+        lineScanner.useDelimiter("\t");
+        return new Movie(lineScanner.next(), lineScanner.nextInt(), lineScanner.nextInt(), lineScanner.next());
     }
     
     /**
