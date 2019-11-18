@@ -5,7 +5,10 @@ import java.io.*;
 * @author Jacob Robinson
 */
 public class MovieSelector {
-    
+    /** Minimum year for movies **/
+    public static final int YEARMIN = 1890;
+    /** Maximum year for movies **/
+    public static final int YEARMAX = 2020;
     /**
     * Main method and UI
     * @param args command line arguments
@@ -40,8 +43,38 @@ public class MovieSelector {
                 System.out.println("\n" + searchByTitle(title, movies));
             }
             else if (option.toUpperCase().equals("Y")) {
+                System.out.print("\nYear (1890-2020): ");
+                if (input.hasNextInt()) {
+                    int year = input.nextInt();
+                    if (year > YEARMIN && year < YEARMAX) {
+                        System.out.println("\n" + searchByYear(year, movies));
+                    } else {
+                        System.out.println("Invalid Year");
+                    }
+                } else {
+                    input.next();
+                    System.out.println("Invalid Year");
+                } 
             }
             else if (option.toUpperCase().equals("G")) {
+                System.out.println("\nGenre Choices: Action, Adventure, Animation, "
+                                    + "Biography, Comedy, Crime, Documentary, Drama, Family,");
+                System.out.println("Fantasy, History, Horror, Musical, Mystery, "
+                                    + "Romance, Sci-Fi, Sport, Thriller, War, Western");
+                System.out.print("\nGenre: ");
+                String genre = input.next();
+                boolean valid = false;
+                for (int i = 0; i < GENRES.length; i++) {
+                    if (genre.toUpperCase().equals(GENRES[i].toUpperCase())) {
+                        valid = true;
+                    }
+                }
+                if (valid) {
+                    System.out.println("\n" + searchByGenre(genre, movies));
+                } else {
+                    System.out.println("Invalid genre\n");
+                }
+                
             }
             else if (option.toUpperCase().equals("Q")) {
                 running = false;
@@ -99,14 +132,15 @@ public class MovieSelector {
     public static Movie lineSetter(String line) {
         Scanner lineScanner = new Scanner(line);
         lineScanner.useDelimiter("\t");
-        return new Movie(lineScanner.next(), lineScanner.nextInt(), lineScanner.nextInt(), lineScanner.next());
+        return new Movie(lineScanner.next(), lineScanner.nextInt(), 
+            lineScanner.nextInt(), lineScanner.next());
     }
     
     /**
     * Searches by title
     * @param title of movies
     * @param movies array of movies
-    * @return string
+    * @return string with movies with matching title
     */
     public static String searchByTitle(String title, Movie[] movies) {
         String matches = "";
@@ -122,10 +156,19 @@ public class MovieSelector {
     * Searches by year
     * @param year of release
     * @param movies array of movies
-    * @return string
+    * @return string with movies with matching year
     */
     public static String searchByYear(int year, Movie[] movies) {
-        return "";
+        String matches = "";
+        if (year < 0) {
+            throw new IllegalArgumentException("Invalid Year");
+        }
+        for (int i = 0; i < movies.length; i++) {
+            if (movies[i].getYear() == year) {
+                matches += movies[i].toString() + "\n";
+            }
+        }
+        return matches;
     }
     
     /**
@@ -135,7 +178,13 @@ public class MovieSelector {
     * @return string
     */
     public static String searchByGenre(String genre, Movie[] movies) {
-        return "";
+        String matches = "";
+        for (int i = 0; i < movies.length; i++) {
+            if (movies[i].getGenre().toUpperCase().indexOf(genre.toUpperCase()) != -1) {
+                matches += movies[i].toString() + "\n";
+            }
+        }
+        return matches;
     }
     
     /**
