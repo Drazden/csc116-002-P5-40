@@ -24,9 +24,34 @@ public class MovieSelector {
             System.out.println(e.getMessage());
             System.exit(1);
         }
-        
-        
-        
+        Scanner input = new Scanner(System.in);
+        boolean running = true;
+        while (running) {
+            System.out.println("\nMovie Selector - Please enter an option below\n");
+            System.out.println("T - Search by title");
+            System.out.println("Y - Search by year");
+            System.out.println("G - Search by genre");
+            System.out.println("Q - Quit the Program");
+            System.out.print("\nOption:");            
+            String option = input.next();
+            if (option.toUpperCase().equals("T")) {
+                System.out.print("\nTitle (is/contains): ");
+                String title = input.next();
+                System.out.println("\n" + searchByTitle(title, movies));
+            }
+            else if (option.toUpperCase().equals("Y")) {
+            }
+            else if (option.toUpperCase().equals("G")) {
+            }
+            else if (option.toUpperCase().equals("Q")) {
+                running = false;
+            }
+            else {
+                System.out.println("Invalid Option");
+            }
+            
+        }
+        System.out.println("\nGoodbye!");
     }
     
     /**
@@ -84,7 +109,13 @@ public class MovieSelector {
     * @return string
     */
     public static String searchByTitle(String title, Movie[] movies) {
-        return "";
+        String matches = "";
+        for (int i = 0; i < movies.length; i++) {
+            if (movies[i].getTitle().toUpperCase().indexOf(title.toUpperCase()) != -1) {
+                matches += movies[i].toString() + "\n";
+            }
+        }
+        return matches;
     }
     
     /**
